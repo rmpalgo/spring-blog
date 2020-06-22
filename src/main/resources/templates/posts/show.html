@@ -1,10 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header('Show One Ad')">
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-
+<nav th:replace="fragments/navbar :: navbar"></nav>
+<div>
+    <h1 th:text="${post.title}">Title</h1>
+    <p th:text="${post.body}">Body</p>
+</div>
+<footer th:replace="fragments/footer :: footer"></footer>
 </body>
 </html>

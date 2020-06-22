@@ -7,14 +7,9 @@
 <body>
 <nav th:replace="fragments/navbar :: navbar"></nav>
 <h1>This is the index page</h1>
-<div>
-    <p1>Hello</p1>
-    <p1>Hello</p1>
-    <p1>Hello</p1>
-    <p1>Hello</p1>
-    <p1>Hello</p1>
-    <p1>Hello</p1>
-    <p1>Hello</p1>
+<div th:each="post : ${posts}">
+    <h1 th:text="${post.title}">Title</h1>
+    <p th:text="${post.body}">Body</p>
 </div>
 <footer th:replace="fragments/footer :: footer"></footer>
 </body>
