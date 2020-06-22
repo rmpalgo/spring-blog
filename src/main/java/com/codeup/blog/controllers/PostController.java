@@ -23,13 +23,13 @@ public class PostController {
 
     @GetMapping("/posts/create")
     @ResponseBody
-    public String create() {
-        return "this is the create page.";
+    public String showForm() {
+        return "view the form.";
     }
 
     @PostMapping("/posts/create")
     @ResponseBody
-    public String createPost() {
-        return "this is a post";
+    public String save() {
+        return "create a new form";
     }
 }

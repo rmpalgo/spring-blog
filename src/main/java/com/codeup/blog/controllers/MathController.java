@@ -17,7 +17,7 @@ public class MathController {
     @GetMapping("/subtract/{num1}/from/{num2}")
     @ResponseBody
     public String subtract(@PathVariable int num1, @PathVariable int num2) {
-        return "The difference between two numbers are: " + (num1 - num2);
+        return "The difference between two numbers are: " + (num2 - num1);
     }
 
     @GetMapping("/divide/{num1}/by/{num2}")
