@@ -17,14 +17,23 @@ public class RollDice {
 
     @GetMapping("/roll-dice/{n}")
     public String result(@PathVariable int n, Model model) {
-        int rand = (int)(Math.random() * 6) + 1;
-        String result;
-        if(n == rand) {
-            result = "You guessed right!";
-        } else {
-            result = "You guessed wrong!";
+        int rand1 = (int)(Math.random() * 6) + 1;
+        int rand2 = (int)(Math.random() * 6) + 1;
+        int rand3 = (int)(Math.random() * 6) + 1;
+        int count = 0;
+        if(n == rand1) {
+            count++;
         }
-        model.addAttribute("rand", "dice roll: " + rand);
+        if(n == rand2) {
+            count++;
+        }
+        if (n == rand3) {
+            count++;
+        }
+        String result = "You guessed correctly " + count + " times!";
+        model.addAttribute("rand1", "dice roll 1: " + rand1);
+        model.addAttribute("rand2", "dice roll 2: " + rand2);
+        model.addAttribute("rand3", "dice roll 3: " + rand3);
         model.addAttribute("guess", "Your guess: " + n);
         model.addAttribute("result", result);
         return "roll-dice";
