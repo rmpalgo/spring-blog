@@ -10,9 +10,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class PostController {
 
     @GetMapping("/posts")
-    @ResponseBody
     public String showAll() {
-        return "All posts!";
+        return "posts/index";
     }
 
     @GetMapping("/posts/{id}")
