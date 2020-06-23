@@ -6,7 +6,10 @@
 </head>
 <body>
 <nav th:replace="fragments/navbar :: navbar"></nav>
-<div>
+<div th:if="${post == null}">
+    Post not found!
+</div>
+<div th:if="${post}">
     <h1 th:text="${post.title}">Title</h1>
     <p th:text="${post.body}">Body</p>
 </div>
