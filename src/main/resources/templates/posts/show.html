@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header('Show One Ad')">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<nav th:replace="fragments/navbar :: navbar"></nav>
+<div th:if="${post == null}">
+    Post not found!
+</div>
+<div th:if="${post}">
+    <h1 th:text="${post.title}">Title</h1>
+    <p th:text="${post.body}">Body</p>
+</div>
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>
