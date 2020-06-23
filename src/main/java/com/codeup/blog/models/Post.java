@@ -1,9 +1,27 @@
 package com.codeup.blog.models;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "posts")
 public class Post {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column(nullable = false, length = 240)
     private String title;
+
+    @Column(nullable = false)
     private String body;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public Post() {
 
