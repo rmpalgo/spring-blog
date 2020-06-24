@@ -61,16 +61,21 @@ public class PostController {
     }
 
     @PostMapping("/posts/create")
-    public String save(@RequestParam(name = "title") String title,
+    public String save(Model model,
+                       @RequestParam(name = "title") String title,
                        @RequestParam(name = "body") String body) {
         Post newPost = new Post(title, body);
         postsDao.save(newPost);
+        List<Post> posts = postsDao.findAll();
+        model.addAttribute("posts", posts);
         return "posts/index";
     }
 
     @PostMapping("/posts/{id}/delete")
-    public String destroy(@PathVariable long id) {
+    public String destroy(Model model, @PathVariable long id) {
         postsDao.deleteById(id);
+        List<Post> posts = postsDao.findAll();
+        model.addAttribute("posts", posts);
         return "posts/index";
     }
 }

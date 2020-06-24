@@ -15,8 +15,7 @@
         <button class="btn btn-success">Save</button>
     </form>
 
-    <form th:action="${'/posts/' + post.id + '/delete'}">
-        <input type="text" th:value="${post.id}" hidden>
+    <form th:action="${'/posts/' + post.id + '/delete'}" th:method="POST">
         <button class="btn btn-danger">Delete</button>
     </form>
 </div>
