@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header('Blog | View Edit Page')">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<nav th:replace="fragments/navbar :: navbar" />
+<div class="container">
+    <form th:action="${'/posts/' + post.id + '/edit'}">
+        <label for="title">Title</label>
+        <input type="text" name="title" id="title" th:value="${post.title}">
+        <label for="body">Body</label>
+        <input type="text" name="body" id="body" th:value="${post.body}">
+        <button class="btn btn-success">Save</button>
+    </form>
+
+    <form th:action="${'/posts/' + post.id + '/delete'}">
+        <input type="text" th:value="${post.id}" hidden>
+        <button class="btn btn-danger">Delete</button>
+    </form>
+</div>
+</body>
+</html>

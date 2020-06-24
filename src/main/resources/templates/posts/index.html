@@ -13,6 +13,9 @@
 <div th:each="post : ${posts}">
     <h1 th:text="${post.title}">Title</h1>
     <p th:text="${post.body}">Body</p>
+    <form th:action="${'/posts/' + post.id + '/edit'}">
+        <button class="btn btn-warning">EDIT</button>
+    </form>
 </div>
 <footer th:replace="fragments/footer :: footer"></footer>
 </body>
