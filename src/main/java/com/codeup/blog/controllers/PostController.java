@@ -1,13 +1,16 @@
 package com.codeup.blog.controllers;
 
 import com.codeup.blog.daos.BlogsRepository;
+import com.codeup.blog.daos.ImagesRepository;
 import com.codeup.blog.daos.UsersRepository;
 import com.codeup.blog.models.Post;
+import com.codeup.blog.models.PostImage;
 import com.codeup.blog.models.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,10 +19,12 @@ public class PostController {
 
     private BlogsRepository postsDao;
     private UsersRepository usersDao;
+    private ImagesRepository imagesDao;
 
-    public PostController(BlogsRepository blogsRepository, UsersRepository UsersRepository) {
+    public PostController(BlogsRepository blogsRepository, UsersRepository usersRepository, ImagesRepository imagesRepository) {
         postsDao = blogsRepository;
-        usersDao = UsersRepository;
+        usersDao = usersRepository;
+        imagesDao = imagesRepository;
     }
 
     @GetMapping("/posts")
@@ -33,6 +38,8 @@ public class PostController {
     @GetMapping("/posts/{id}")
     public String showOne(@PathVariable long id, Model model) {
         Post post = postsDao.getOne(id);
+        PostImage images = imagesDao.getOne(id);
+        model.addAttribute("images", images);
         model.addAttribute("post", post);
         return "posts/show";
     }
@@ -71,7 +78,7 @@ public class PostController {
                        @RequestParam(name = "user") Long user) {
         Long userId = user;
         User userObj = usersDao.getOne(userId);
-        Post newPost = new Post(title, body, userObj);
+        Post newPost = new Post(title, body, userObj, null);
         postsDao.save(newPost);
         List<Post> posts = postsDao.findAll();
         model.addAttribute("posts", posts);
