@@ -1,6 +1,7 @@
 package com.codeup.blog.controllers;
 
 import com.codeup.blog.daos.BlogsRepository;
+import com.codeup.blog.daos.UsersRepository;
 import com.codeup.blog.models.Post;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,9 +14,11 @@ import java.util.List;
 public class PostController {
 
     private BlogsRepository postsDao;
+    private UsersRepository usersDao;
 
-    public PostController(BlogsRepository blogsRepository) {
+    public PostController(BlogsRepository blogsRepository, UsersRepository UsersRepository) {
         postsDao = blogsRepository;
+        usersDao = UsersRepository;
     }
 
     @GetMapping("/posts")
@@ -64,7 +67,7 @@ public class PostController {
     public String save(Model model,
                        @RequestParam(name = "title") String title,
                        @RequestParam(name = "body") String body) {
-        Post newPost = new Post(title, body);
+        Post newPost = new Post(title, body, null);
         postsDao.save(newPost);
         List<Post> posts = postsDao.findAll();
         model.addAttribute("posts", posts);
