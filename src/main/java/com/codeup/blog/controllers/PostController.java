@@ -1,12 +1,10 @@
 package com.codeup.blog.controllers;
 
+import com.codeup.blog.daos.BlogsRepository;
 import com.codeup.blog.models.Post;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,12 +12,16 @@ import java.util.List;
 @Controller
 public class PostController {
 
+    private BlogsRepository postsDao;
+
+    public PostController(BlogsRepository blogsRepository) {
+        postsDao = blogsRepository;
+    }
+
     @GetMapping("/posts")
     public String showAll(Model model) {
-        List<Post> posts = new ArrayList<>();
-        posts.add(new Post("Post 1", "This is the body of post 1"));
-        posts.add(new Post("Post 2", "This is the body of post 2"));
-        posts.add(new Post("Post 3", "This is the body of post 3"));
+        List<Post> posts = postsDao.findAll();
+        model.addAttribute("noPostsFound", posts.size() == 0);
         model.addAttribute("posts", posts);
         return "posts/index";
     }
@@ -31,15 +33,49 @@ public class PostController {
         return "posts/show";
     }
 
+    @GetMapping("/posts/{id}/edit")
+    public String showEditForm(Model model, @PathVariable long id) {
+        //find an ad
+        Post postToEdit = postsDao.getOne(id);
+        model.addAttribute("post", postToEdit);
+        return "posts/edit";
+    }
+
+    @PostMapping("/posts/{id}/edit")
+    public String update(@PathVariable long id,
+                         @RequestParam(name = "title") String title,
+                         @RequestParam(name = "body") String body) {
+        //find an ad
+        Post foundPost = postsDao.getOne(id); // select * from posts where id = ?
+        //edit the post
+        foundPost.setTitle(title);
+        foundPost.setBody(body);
+        //save the changes
+        postsDao.save(foundPost); // update ads set title = ? where id = ?
+        return "posts/index";
+    }
+
     @GetMapping("/posts/create")
-    @ResponseBody
     public String showForm() {
-        return "view the form.";
+        return "posts/create";
     }
 
     @PostMapping("/posts/create")
-    @ResponseBody
-    public String save() {
-        return "create a new form";
+    public String save(Model model,
+                       @RequestParam(name = "title") String title,
+                       @RequestParam(name = "body") String body) {
+        Post newPost = new Post(title, body);
+        postsDao.save(newPost);
+        List<Post> posts = postsDao.findAll();
+        model.addAttribute("posts", posts);
+        return "posts/index";
+    }
+
+    @PostMapping("/posts/{id}/delete")
+    public String destroy(Model model, @PathVariable long id) {
+        postsDao.deleteById(id);
+        List<Post> posts = postsDao.findAll();
+        model.addAttribute("posts", posts);
+        return "posts/index";
     }
 }

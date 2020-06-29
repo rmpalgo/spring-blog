@@ -1,9 +1,32 @@
 package com.codeup.blog.models;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "posts")
 public class Post {
+
+    @Id
+    @JsonManagedReference
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column(nullable = false, length = 240)
+    @JsonManagedReference
     private String title;
+
+    @Column(nullable = false)
+    @JsonManagedReference
     private String body;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public Post() {
 
