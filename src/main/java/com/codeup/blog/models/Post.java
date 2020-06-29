@@ -28,16 +28,19 @@ public class Post {
         this.id = id;
     }
 
+    // Spring uses the empty constructor
     public Post() {
 
     }
 
+    // read
     public Post(long id, String title, String body) {
         this.id = id;
         this.title = title;
         this.body = body;
     }
 
+    // insert
     public Post(String title, String body) {
         this.title = title;
         this.body = body;
