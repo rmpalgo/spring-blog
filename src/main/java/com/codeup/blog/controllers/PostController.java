@@ -75,14 +75,19 @@ public class PostController {
     public String save(Model model,
                        @RequestParam(name = "title") String title,
                        @RequestParam(name = "body") String body,
-                       @RequestParam(name = "user") Long user) {
+                       @RequestParam(name = "user") Long user,
+                       @RequestParam(name = "image") String image) {
+        PostImage imageUrl = new PostImage();
+        imageUrl.setDescription("photo");
+        imageUrl.setPath(image);
         Long userId = user;
         User userObj = usersDao.getOne(userId);
-        Post newPost = new Post(title, body, userObj, null);
-        postsDao.save(newPost);
-        List<Post> posts = postsDao.findAll();
-        model.addAttribute("posts", posts);
-        return "posts/index";
+        List<PostImage> images = new ArrayList<>();
+        images.add(imageUrl);
+        Post newPost = new Post(title, body, userObj, images);
+        imageUrl.setPost(newPost);
+        Post savedPost = postsDao.save(newPost);
+        return "redirect:/posts/" + savedPost.getId();
     }
 
     @PostMapping("/posts/{id}/delete")
