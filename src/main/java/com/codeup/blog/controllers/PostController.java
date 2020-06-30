@@ -14,6 +14,8 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Long.parseLong;
+
 @Controller
 public class PostController {
 
@@ -67,27 +69,24 @@ public class PostController {
     }
 
     @GetMapping("/posts/create")
-    public String showForm() {
+    public String showForm(Model viewModel) {
+        viewModel.addAttribute("post", new Post());
         return "posts/create";
     }
 
     @PostMapping("/posts/create")
-    public String save(Model model,
-                       @RequestParam(name = "title") String title,
-                       @RequestParam(name = "body") String body,
-                       @RequestParam(name = "user") Long user,
+    public String save(@ModelAttribute Post postToBeSaved,
                        @RequestParam(name = "image") String image) {
         PostImage imageUrl = new PostImage();
         imageUrl.setDescription("photo");
         imageUrl.setPath(image);
-        Long userId = user;
-        User userObj = usersDao.getOne(userId);
+        postToBeSaved.setUser(usersDao.getOne(1L));
         List<PostImage> images = new ArrayList<>();
         images.add(imageUrl);
-        Post newPost = new Post(title, body, userObj, images);
-        imageUrl.setPost(newPost);
-        Post savedPost = postsDao.save(newPost);
-        return "redirect:/posts/" + savedPost.getId();
+        postToBeSaved.setImages(images);
+        imageUrl.setPost(postToBeSaved);
+        postsDao.save(postToBeSaved);
+        return "redirect:/posts/" + 3postToBeSaved.getId();
     }
 
     @PostMapping("/posts/{id}/delete")
