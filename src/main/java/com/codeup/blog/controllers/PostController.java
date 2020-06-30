@@ -6,6 +6,7 @@ import com.codeup.blog.daos.UsersRepository;
 import com.codeup.blog.models.Post;
 import com.codeup.blog.models.PostImage;
 import com.codeup.blog.models.User;
+import com.codeup.blog.services.EmailService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,14 +20,17 @@ import static java.lang.Long.parseLong;
 @Controller
 public class PostController {
 
+    //dependency injections
     private BlogsRepository postsDao;
     private UsersRepository usersDao;
     private ImagesRepository imagesDao;
+    private final EmailService emailService;
 
-    public PostController(BlogsRepository blogsRepository, UsersRepository usersRepository, ImagesRepository imagesRepository) {
-        postsDao = blogsRepository;
-        usersDao = usersRepository;
-        imagesDao = imagesRepository;
+    public PostController(BlogsRepository blogsRepository, UsersRepository usersRepository, ImagesRepository imagesRepository, EmailService emailService) {
+        this.postsDao = blogsRepository;
+        this.usersDao = usersRepository;
+        this.imagesDao = imagesRepository;
+        this.emailService = emailService;
     }
 
     @GetMapping("/posts")
@@ -82,7 +86,8 @@ public class PostController {
         images.add(imageUrl);
         postToBeSaved.setImages(images);
         imageUrl.setPost(postToBeSaved);
-        postsDao.save(postToBeSaved);
+        Post savedPost = postsDao.save(postToBeSaved);
+        emailService.prepareAndSend(savedPost, "A new Post", "A Post has been created with an id" + savedPost.getId());
         return "redirect:/posts/" + postToBeSaved.getId();
     }
 
