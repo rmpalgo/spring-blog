@@ -55,17 +55,14 @@ public class PostController {
     }
 
     @PostMapping("/posts/{id}/edit")
-    public String update(@PathVariable long id,
-                         @RequestParam(name = "title") String title,
-                         @RequestParam(name = "body") String body) {
+    public String update(@ModelAttribute Post postToEdit) {
         //find an ad
-        Post foundPost = postsDao.getOne(id); // select * from posts where id = ?
+        User currentUser = usersDao.getOne(1L); // select * from posts where id = ?
         //edit the post
-        foundPost.setTitle(title);
-        foundPost.setBody(body);
+        postToEdit.setUser(currentUser);
         //save the changes
-        postsDao.save(foundPost); // update ads set title = ? where id = ?
-        return "posts/index";
+        postsDao.save(postToEdit); // update ads set title = ? where id = ?
+        return "redirect:/posts/" + postToEdit.getId();
     }
 
     @GetMapping("/posts/create")
@@ -86,7 +83,7 @@ public class PostController {
         postToBeSaved.setImages(images);
         imageUrl.setPost(postToBeSaved);
         postsDao.save(postToBeSaved);
-        return "redirect:/posts/" + 3postToBeSaved.getId();
+        return "redirect:/posts/" + postToBeSaved.getId();
     }
 
     @PostMapping("/posts/{id}/delete")
