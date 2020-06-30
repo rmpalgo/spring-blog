@@ -1,24 +1,27 @@
 package com.codeup.blog.models;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "posts")
 public class Post {
 
     @Id
-    @JsonManagedReference
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(nullable = false, length = 240)
-    @JsonManagedReference
     private String title;
 
     @Column(nullable = false)
-    @JsonManagedReference
     private String body;
+
+    @OneToOne
+    private User user;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
+    private List<PostImage> images;
 
     public long getId() {
         return id;
@@ -28,19 +31,26 @@ public class Post {
         this.id = id;
     }
 
+    // Spring uses the empty constructor
     public Post() {
 
     }
 
-    public Post(long id, String title, String body) {
+    // read
+    public Post(long id, String title, String body, User user, List<PostImage> images) {
         this.id = id;
         this.title = title;
         this.body = body;
+        this.user = user;
+        this.images = images;
     }
 
-    public Post(String title, String body) {
+    // insert
+    public Post(String title, String body, User user, List<PostImage> images) {
         this.title = title;
         this.body = body;
+        this.user = user;
+        this.images = images;
     }
 
     public String getTitle() {
@@ -57,5 +67,21 @@ public class Post {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<PostImage> getImages() {
+        return images;
+    }
+
+    public void setImages(List<PostImage> images) {
+        this.images = images;
     }
 }

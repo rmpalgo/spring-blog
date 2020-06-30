@@ -10,8 +10,12 @@
     Post not found!
 </div>
 <div th:if="${post}">
-    <h1 th:text="${post.title}">Title</h1>
-    <p th:text="${post.body}">Body</p>
+    <h1>Title: <span th:text="${post.title}"></span></h1>
+    <p>Email: <span th:text="${post.user.email}"></span></p>
+    <p>Body: <span th:text="${post.body}"></span></p>
+</div>
+<div th:each="image: ${post.images}">
+    <img th:src="${image.path}" th:alt="${image.description}">
 </div>
 <footer th:replace="fragments/footer :: footer"></footer>
 </body>
