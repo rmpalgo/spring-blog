@@ -6,6 +6,7 @@ import com.codeup.blog.daos.UsersRepository;
 import com.codeup.blog.models.Post;
 import com.codeup.blog.models.PostImage;
 import com.codeup.blog.models.User;
+import com.codeup.blog.services.EmailService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,17 +15,22 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Long.parseLong;
+
 @Controller
 public class PostController {
 
+    //dependency injections
     private BlogsRepository postsDao;
     private UsersRepository usersDao;
     private ImagesRepository imagesDao;
+    private final EmailService emailService;
 
-    public PostController(BlogsRepository blogsRepository, UsersRepository usersRepository, ImagesRepository imagesRepository) {
-        postsDao = blogsRepository;
-        usersDao = usersRepository;
-        imagesDao = imagesRepository;
+    public PostController(BlogsRepository blogsRepository, UsersRepository usersRepository, ImagesRepository imagesRepository, EmailService emailService) {
+        this.postsDao = blogsRepository;
+        this.usersDao = usersRepository;
+        this.imagesDao = imagesRepository;
+        this.emailService = emailService;
     }
 
     @GetMapping("/posts")
@@ -52,42 +58,37 @@ public class PostController {
         return "posts/edit";
     }
 
-    @PostMapping("/posts/{id}/edit")
-    public String update(@PathVariable long id,
-                         @RequestParam(name = "title") String title,
-                         @RequestParam(name = "body") String body) {
+    @PostMapping("/posts/edit")
+    public String update(@ModelAttribute Post postToEdit) {
         //find an ad
-        Post foundPost = postsDao.getOne(id); // select * from posts where id = ?
+        User currentUser = usersDao.getOne(1L); // select * from posts where id = ?
         //edit the post
-        foundPost.setTitle(title);
-        foundPost.setBody(body);
+        postToEdit.setUser(currentUser);
         //save the changes
-        postsDao.save(foundPost); // update ads set title = ? where id = ?
-        return "posts/index";
+        postsDao.save(postToEdit); // update ads set title = ? where id = ?
+        return "redirect:/posts/" + postToEdit.getId();
     }
 
     @GetMapping("/posts/create")
-    public String showForm() {
+    public String showForm(Model viewModel) {
+        viewModel.addAttribute("post", new Post());
         return "posts/create";
     }
 
     @PostMapping("/posts/create")
-    public String save(Model model,
-                       @RequestParam(name = "title") String title,
-                       @RequestParam(name = "body") String body,
-                       @RequestParam(name = "user") Long user,
+    public String save(@ModelAttribute Post postToBeSaved,
                        @RequestParam(name = "image") String image) {
         PostImage imageUrl = new PostImage();
         imageUrl.setDescription("photo");
         imageUrl.setPath(image);
-        Long userId = user;
-        User userObj = usersDao.getOne(userId);
+        postToBeSaved.setUser(usersDao.getOne(1L));
         List<PostImage> images = new ArrayList<>();
         images.add(imageUrl);
-        Post newPost = new Post(title, body, userObj, images);
-        imageUrl.setPost(newPost);
-        Post savedPost = postsDao.save(newPost);
-        return "redirect:/posts/" + savedPost.getId();
+        postToBeSaved.setImages(images);
+        imageUrl.setPost(postToBeSaved);
+        Post savedPost = postsDao.save(postToBeSaved);
+        emailService.prepareAndSend(savedPost, "A new Post", "A Post has been created with an id" + savedPost.getId());
+        return "redirect:/posts/" + postToBeSaved.getId();
     }
 
     @PostMapping("/posts/{id}/delete")
