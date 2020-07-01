@@ -58,7 +58,7 @@ public class PostController {
         return "posts/edit";
     }
 
-    @PostMapping("/posts/{id}/edit")
+    @PostMapping("/posts/edit")
     public String update(@ModelAttribute Post postToEdit) {
         //find an ad
         User currentUser = usersDao.getOne(1L); // select * from posts where id = ?

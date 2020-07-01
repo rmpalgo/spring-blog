@@ -7,15 +7,9 @@
 <body>
 <nav th:replace="fragments/navbar :: navbar" />
 <div class="container">
-    <form action=/posts/create th:method="POST" th:object="${post}">
-        <label for="title">Title</label>
-        <input th:field="*{title}" id="title">
-        <label for="body">Body</label>
-        <input type="text" th:field="*{body}" id="body">
-        <label for="image">Image url</label>
-        <input type="text" name="image" id="image">
-        <button class="btn btn-success">Save</button>
-    </form>
+    <div class="container">
+        <div th:replace="fragments/formfragment :: postsForm('/posts/create', false)"></div>
+    </div>
 </div>
 </body>
 </html>
