@@ -29,7 +29,7 @@
             </div>
         </form>
 
-        <form th:if="${!showEdit}" th:action="${'/posts/' + post.id + '/delete'}" th:method="POST">
+        <form th:if="${showEdit}" th:action="${'/posts/' + post.id + '/delete'}" th:method="POST">
             <button class="btn btn-danger">Delete</button>
         </form>
     </div>
