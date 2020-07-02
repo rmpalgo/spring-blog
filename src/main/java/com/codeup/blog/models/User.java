@@ -10,17 +10,25 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
-    @Column
+    @Column(nullable = false, length = 50, unique = true)
     String username;
 
-    @Column
+    @Column(nullable = false, length = 50, unique = true)
     String email;
 
-    @Column
+    @Column(nullable = false)
     String password;
 
     //empty constructor for Spring framework
     public User() {
+    }
+
+    //copy constructor
+    public User(User copy) {
+        id = copy.id; // This line is SUPER important! Many things won't work if it's absent
+        email = copy.email;
+        username = copy.username;
+        password = copy.password;
     }
 
     //read

@@ -7,6 +7,7 @@ import com.codeup.blog.models.Post;
 import com.codeup.blog.models.PostImage;
 import com.codeup.blog.models.User;
 import com.codeup.blog.services.EmailService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -79,9 +80,10 @@ public class PostController {
     public String save(@ModelAttribute Post postToBeSaved,
                        @RequestParam(name = "image") String image) {
         PostImage imageUrl = new PostImage();
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         imageUrl.setDescription("photo");
         imageUrl.setPath(image);
-        postToBeSaved.setUser(usersDao.getOne(1L));
+        postToBeSaved.setUser(currentUser);
         List<PostImage> images = new ArrayList<>();
         images.add(imageUrl);
         postToBeSaved.setImages(images);
