@@ -120,7 +120,7 @@ public class PostsIntegrationTests {
                         .session((MockHttpSession) httpSession)
                         // Add all the required parameters to your request like this
                         .param("title", "test")
-                        .param("description", "for sale")
+                        .param("body", "for sale")
                         .param("image", "fakeUrlStringImage"))
                 .andExpect(status().is3xxRedirection());
     }
