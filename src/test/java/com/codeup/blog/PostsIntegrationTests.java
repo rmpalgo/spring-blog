@@ -44,6 +44,9 @@ public class PostsIntegrationTests {
     BlogsRepository postsDao;
 
     @Autowired
+    ImagesRepository imagesDao;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Before
@@ -95,4 +98,18 @@ public class PostsIntegrationTests {
                 // Test the dynamic content of the page
                 .andExpect(content().string(containsString(existingPost.getTitle())));
     }
+
+    @Test
+    public void testShowPost() throws Exception {
+
+        Post existingPost = postsDao.getOne(9L);
+        System.out.println(existingPost.getId());
+
+        // Makes a Get request to /ads/{id} and expect a redirection to the Ad show page
+        this.mvc.perform(get("/posts/" + existingPost.getId()))
+                .andExpect(status().isOk())
+                // Test the dynamic content of the page
+                .andExpect(content().string(containsString(existingPost.getBody())));
+    }
+
 }

@@ -1,9 +1,12 @@
 package com.codeup.blog.models;
 
+import org.hibernate.annotations.Proxy;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "post_images")
+@Proxy(lazy = false)
 public class PostImage {
 
     @Id
