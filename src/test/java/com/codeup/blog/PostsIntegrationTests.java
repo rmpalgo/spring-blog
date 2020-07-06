@@ -102,7 +102,7 @@ public class PostsIntegrationTests {
     @Test
     public void testShowPost() throws Exception {
 
-        Post existingPost = postsDao.getOne(9L);
+        Post existingPost = postsDao.findAll().get(0);
         System.out.println(existingPost.getId());
 
         // Makes a Get request to /ads/{id} and expect a redirection to the Ad show page
