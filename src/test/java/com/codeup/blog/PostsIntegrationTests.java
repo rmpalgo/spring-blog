@@ -112,4 +112,17 @@ public class PostsIntegrationTests {
                 .andExpect(content().string(containsString(existingPost.getBody())));
     }
 
+    @Test
+    public void testCreatePost() throws Exception {
+        // Makes a Post request to /ads/create and expect a redirection to the Ad
+        this.mvc.perform(
+                post("/posts/create").with(csrf())
+                        .session((MockHttpSession) httpSession)
+                        // Add all the required parameters to your request like this
+                        .param("title", "test")
+                        .param("description", "for sale")
+                        .param("image", "fakeUrlStringImage"))
+                .andExpect(status().is3xxRedirection());
+    }
+
 }
