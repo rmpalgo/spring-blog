@@ -125,4 +125,27 @@ public class PostsIntegrationTests {
                 .andExpect(status().is3xxRedirection());
     }
 
+    @Test
+    public void testEditPost() throws Exception {
+        // Gets the first Ad for tests purposes
+        Post existingPost = postsDao.findAll().get(0);
+        System.out.println("ExistingPost " + existingPost.getTitle() + " id " + existingPost.getId());
+
+        // Makes a Post request to /ads/{id}/edit and expect a redirection to the Ad show page
+        this.mvc.perform(
+                post("/posts/edit").with(csrf())
+                        .session((MockHttpSession) httpSession)
+                        .param("id", "5")
+                        .param("title", "edited title")
+                        .param("body", "edited body"))
+                .andExpect(status().is3xxRedirection());
+
+        // Makes a GET request to /ads/{id} and expect a redirection to the Ad show page
+        this.mvc.perform(get("/posts/" + existingPost.getId()))
+                .andExpect(status().isOk())
+                // Test the dynamic content of the page
+                .andExpect(content().string(containsString("edited title")))
+                .andExpect(content().string(containsString("edited body")));
+    }
+
 }

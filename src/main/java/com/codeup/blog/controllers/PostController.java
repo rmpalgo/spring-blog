@@ -58,14 +58,13 @@ public class PostController {
     }
 
     @PostMapping("/posts/edit")
-    public String update(@ModelAttribute Post postToEdit) {
-        //find an ad
-        User currentUser = usersDao.getOne(1L); // select * from posts where id = ?
-        //edit the post
-        postToEdit.setUser(currentUser);
-        //save the changes
-        postsDao.save(postToEdit); // update ads set title = ? where id = ?
-        return "redirect:/posts/" + postToEdit.getId();
+    public String update(@ModelAttribute Post postEdited) {
+        System.out.println("PostEdited: " + postEdited.getId());
+        Post postToBeUpdated = postsDao.getOne(postEdited.getId());
+        postToBeUpdated.setTitle(postEdited.getTitle());
+        postToBeUpdated.setBody(postEdited.getBody());
+        postsDao.save(postToBeUpdated); // update ads set title = ? where id = ?
+        return "redirect:/posts/" + postEdited.getId();
     }
 
     @GetMapping("/posts/create")
