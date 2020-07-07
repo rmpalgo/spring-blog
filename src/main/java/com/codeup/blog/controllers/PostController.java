@@ -93,8 +93,6 @@ public class PostController {
     @PostMapping("/posts/{id}/delete")
     public String destroy(Model model, @PathVariable long id) {
         postsDao.deleteById(id);
-        List<Post> posts = postsDao.findAll();
-        model.addAttribute("posts", posts);
-        return "posts/index";
+        return "redirect:/posts";
     }
 }

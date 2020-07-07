@@ -148,4 +148,26 @@ public class PostsIntegrationTests {
                 .andExpect(content().string(containsString("edited body")));
     }
 
+    @Test
+    public void testDeletePost() throws Exception {
+        // Creates a test Ad to be deleted
+        this.mvc.perform(
+                post("/posts/create").with(csrf())
+                        .session((MockHttpSession) httpSession)
+                        .param("title", "post to be deleted")
+                        .param("body", "won't last long")
+                        .param("image", "fakeUrlStringImage"))
+                .andExpect(status().is3xxRedirection());
+
+        // Get the recent Ad that matches the title
+        Post existingAd = postsDao.findByTitle("post to be deleted");
+
+        // Makes a Post request to /ads/{id}/delete and expect a redirection to the Ads index
+        this.mvc.perform(
+                post("/posts/" + existingAd.getId() + "/delete").with(csrf())
+                        .session((MockHttpSession) httpSession)
+                        .param("id", String.valueOf(existingAd.getId())))
+                .andExpect(status().is3xxRedirection());
+    }
+
 }
