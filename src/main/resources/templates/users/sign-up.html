@@ -9,27 +9,45 @@
 <body>
 <h1>Create an account</h1>
 
-<div class="container">
-    <form th:action="@{/sign-up}" method="POST" th:object="${user}">
-        <div class="container" id="register">
-        <div class="">
-            <label for="username">Username</label>
-            <input id="username" th:field="*{username}" />
-        </div>
+<!--<div class="container">-->
+<!--    <form th:action="@{/sign-up}" method="POST" th:object="${user}">-->
+<!--        <div class="container row" id="register">-->
+<!--        <div class="">-->
+<!--            <label for="username">Username</label>-->
+<!--            <input id="username" th:field="*{username}" />-->
+<!--        </div>-->
 
-        <div>
-            <label for="email">Email</label>
-            <input id="email" th:field="*{email}" />
-        </div>
+<!--        <div>-->
+<!--            <label for="email">Email</label>-->
+<!--            <input id="email" th:field="*{email}" />-->
+<!--        </div>-->
 
-        <div>
-            <label for="password">Password</label>
-            <input id="password" type="password" th:field="*{password}" />
-        </div>
+<!--        <div>-->
+<!--            <label for="password">Password</label>-->
+<!--            <input id="password" type="password" th:field="*{password}" />-->
+<!--        </div>-->
 
-        <input value="Sign me up!" type="submit" />
-        </div>
-    </form>
+<!--        <input value="Sign me up!" type="submit" />-->
+<!--        </div>-->
+<!--    </form>-->
+<!--</div>-->
+<div class="container d-flex justify-content-center">
+<form id="register">
+    <div class="form-group">
+        <label for="exampleInputEmail1">Username</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
 </div>
+
 </body>
 </html>
