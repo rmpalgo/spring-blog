@@ -11,53 +11,31 @@
         <a class="nav-link active" id="logo" href="#">BLOG</a>
     </li>
     <li class="nav-item mt-2">
-        <a class="nav-link" id="login" href="#">Already a member? <span>Sign In</span></a>
+        <a class="nav-link text-white" id="login" href="#">Already a member? <span>Sign In</span></a>
     </li>
 </ul>
 <body>
-<!--<div class="container">-->
-<!--    <form th:action="@{/sign-up}" method="POST" th:object="${user}">-->
-<!--        <div class="container row" id="register">-->
-<!--        <div class="">-->
-<!--            <label for="username">Username</label>-->
-<!--            <input id="username" th:field="*{username}" />-->
-<!--        </div>-->
-
-<!--        <div>-->
-<!--            <label for="email">Email</label>-->
-<!--            <input id="email" th:field="*{email}" />-->
-<!--        </div>-->
-
-<!--        <div>-->
-<!--            <label for="password">Password</label>-->
-<!--            <input id="password" type="password" th:field="*{password}" />-->
-<!--        </div>-->
-
-<!--        <input value="Sign me up!" type="submit" />-->
-<!--        </div>-->
-<!--    </form>-->
-<!--</div>-->
-<div class="text-center mt-5">
+<div class="text-center" id="icons">
     <h5>Register to start creating today</h5>
     <div class="mt-4 mb-4">
         <img class="mr-3" src="https://img.icons8.com/color/48/000000/google-logo.png"/>
         <img src="https://img.icons8.com/officel/40/000000/facebook-new.png"/>
     </div>
-    <p class="mt-3 mb-3"><span>Or</span></p>
 </div>
+<p class="mt-3 mb-3"><span class="text-white">Or</span></p>
 <div class="container d-flex justify-content-center">
-    <form id="register">
+    <form th:action="@{/sign-up}" method="POST" th:object="${user}">
         <div class="form-group">
-            <label for="exampleInputEmail1">Username</label>
-            <input type="email" class="w-100 h-50" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+            <label for="username">Username</label>
+            <input type="text" class="w-100 h-50 transparent" id="username" th:field="*{username}" placeholder="username">
         </div>
         <div class="form-group">
-            <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="w-100 h-50" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+            <label for="email">Email address</label>
+            <input type="email" class="w-100 h-50 transparent" id="email" th:field="*{email}" placeholder="Enter email">
         </div>
         <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="w-100 h-50" id="exampleInputPassword1" placeholder="Password">
+            <label for="password">Password</label>
+            <input type="password" class="w-100 h-50 transparent" id="password" th:field="*{password}" placeholder="Password">
         </div>
         <div class="text-center">
             <button type="submit" class="d-block mr-auto ml-auto mt-4 pl-4 pr-4">Submit</button>

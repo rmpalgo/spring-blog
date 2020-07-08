@@ -2,8 +2,26 @@
     margin: 0;
 }
 
-p {
-    width: 20%;
+body {
+    background-color: #1d1b1b;
+    color: #ffffff;
+}
+
+.form-group input.transparent{
+    background: #333333;
+    padding: 8px 8px;
+    border: transparent;
+    border-radius: 5px;
+}
+
+div button {
+    border: transparent;
+    border-radius: 5px;
+    background-color: #FFCA1E;
+}
+
+ p {
+    width: 18%;
     text-align: center;
     border-bottom: 1px solid #808080;
     line-height: 0.1em;
@@ -11,7 +29,7 @@ p {
 }
 
 p span {
-    background:#fff;
+    background:#1d1b1b;
     padding:0 10px;
 }
 
@@ -22,4 +40,16 @@ li a#logo {
 
 a span#login {
     font-size: 10px;
+}
+
+div#icons {
+    margin-top: 100px;
+}
+
+a#logo {
+    color: #FFCA1E
+}
+
+a#login span {
+    color: #FFCA1E
 }
