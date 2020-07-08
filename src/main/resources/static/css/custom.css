@@ -1,3 +1,25 @@
 * {
     margin: 0;
 }
+
+p {
+    width: 20%;
+    text-align: center;
+    border-bottom: 1px solid #808080;
+    line-height: 0.1em;
+    margin: 0 auto;
+}
+
+p span {
+    background:#fff;
+    padding:0 10px;
+}
+
+li a#logo {
+    display: block;
+    font-size: 30px;
+}
+
+a span#login {
+    font-size: 10px;
+}
