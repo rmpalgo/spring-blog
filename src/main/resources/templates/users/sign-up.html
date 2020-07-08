@@ -3,20 +3,33 @@
 <head>
     <meta charset="UTF-8" />
     <title>Sign up</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/custom.css">
 </head>
 <body>
 <h1>Create an account</h1>
-<form th:action="@{/sign-up}" method="POST" th:object="${user}">
-    <label for="username">Username</label>
-    <input id="username" th:field="*{username}" />
 
-    <label for="email">Email</label>
-    <input id="email" th:field="*{email}" />
+<div class="container">
+    <form th:action="@{/sign-up}" method="POST" th:object="${user}">
+        <div class="container" id="register">
+        <div class="">
+            <label for="username">Username</label>
+            <input id="username" th:field="*{username}" />
+        </div>
 
-    <label for="password">Password</label>
-    <input id="password" type="password" th:field="*{password}" />
+        <div>
+            <label for="email">Email</label>
+            <input id="email" th:field="*{email}" />
+        </div>
 
-    <input value="Sign me up!" type="submit" />
-</form>
+        <div>
+            <label for="password">Password</label>
+            <input id="password" type="password" th:field="*{password}" />
+        </div>
+
+        <input value="Sign me up!" type="submit" />
+        </div>
+    </form>
+</div>
 </body>
 </html>
