@@ -6,6 +6,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/custom.css">
 </head>
+
+<body>
+
 <ul class="nav d-flex justify-content-between mt-3">
     <li class="nav-item">
         <a class="nav-link active" id="logo" href="#">BLOG</a>
@@ -14,28 +17,31 @@
         <a class="nav-link text-white" id="login" href="#">Already a member? <span>Sign In</span></a>
     </li>
 </ul>
-<body>
+
 <div class="text-center" id="icons">
     <h5>Register to start creating today</h5>
     <div class="mt-4 mb-4">
         <img class="mr-3" src="https://img.icons8.com/color/48/000000/google-logo.png"/>
         <img src="https://img.icons8.com/officel/40/000000/facebook-new.png"/>
     </div>
+    <div id="line-container">
+            <p class="mt-3 mb-3"><span class="text-white">Or</span></p>
+    </div>
 </div>
-<p class="mt-3 mb-3"><span class="text-white">Or</span></p>
+
 <div class="container d-flex justify-content-center">
     <form th:action="@{/sign-up}" method="POST" th:object="${user}">
         <div class="form-group">
             <label for="username">Username</label>
-            <input type="text" class="w-100 h-50 transparent" id="username" th:field="*{username}" placeholder="username">
+            <input type="text" class="w-100 h-50 transparent text-white" id="username" th:field="*{username}" placeholder="username" required>
         </div>
         <div class="form-group">
             <label for="email">Email address</label>
-            <input type="email" class="w-100 h-50 transparent" id="email" th:field="*{email}" placeholder="Enter email">
+            <input type="email" class="w-100 h-50 transparent text-white" id="email" th:field="*{email}" placeholder="Enter email" required>
         </div>
         <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" class="w-100 h-50 transparent" id="password" th:field="*{password}" placeholder="Password">
+            <input type="password" class="w-100 h-50 transparent text-white" id="password" th:field="*{password}" placeholder="Password" required>
         </div>
         <div class="text-center">
             <button type="submit" class="d-block mr-auto ml-auto mt-4 pl-4 pr-4">Submit</button>

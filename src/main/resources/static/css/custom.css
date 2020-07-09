@@ -20,8 +20,8 @@ div button {
     background-color: #FFCA1E;
 }
 
- p {
-    width: 18%;
+p {
+    width: 70%;
     text-align: center;
     border-bottom: 1px solid #808080;
     line-height: 0.1em;
@@ -53,3 +53,13 @@ a#logo {
 a#login span {
     color: #FFCA1E
 }
+
+#line-container {
+    width: 400px;
+    margin: 0 auto;
+}
+
+textarea:focus, input:focus{
+    outline: none;
+}
+
