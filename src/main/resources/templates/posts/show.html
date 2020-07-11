@@ -17,6 +17,9 @@
 <div th:each="image: ${post.images}">
     <img th:src="${image.path}" th:alt="${image.description}">
 </div>
+
+
+
 <footer th:replace="fragments/footer :: footer"></footer>
 </body>
 </html>
