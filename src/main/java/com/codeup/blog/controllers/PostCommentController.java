@@ -16,13 +16,13 @@ import java.util.Date;
 import java.util.List;
 
 @Controller
-public class PostComment {
+public class PostCommentController {
 
     private BlogsRepository postsDao;
     private UsersRepository usersDao;
     private CommentsRepository commentsDao;
 
-    public PostComment(BlogsRepository blogsRepository, UsersRepository usersRepository, CommentsRepository commentsRepository) {
+    public PostCommentController(BlogsRepository blogsRepository, UsersRepository usersRepository, CommentsRepository commentsRepository) {
         this.postsDao = blogsRepository;
         this.usersDao = usersRepository;
         this.commentsDao = commentsRepository;
@@ -36,8 +36,8 @@ public class PostComment {
         commentToBeSaved.setUser(user);
         Date currentDate = new Date();
         commentToBeSaved.setCreatedAt(currentDate);
-        commentsDao.save(commentToBeSaved);
-        return "redirect:/comments";
+        Comment savedComment = commentsDao.save(commentToBeSaved);
+        return "redirect:/posts/" + savedComment.getPost().getId();
     }
 
 
