@@ -11,12 +11,26 @@
 </div>
 <div th:if="${post}">
     <h1>Title: <span th:text="${post.title}"></span></h1>
-    <p>Email: <span th:text="${post.user.email}"></span></p>
-    <p>Body: <span th:text="${post.body}"></span></p>
+    <h3>Email: <span th:text="${post.user.email}"></span></h3>
+    <h3>Body: <span th:text="${post.body}"></span></h3>
 </div>
 <div th:each="image: ${post.images}">
     <img th:src="${image.path}" th:alt="${image.description}">
 </div>
+
+<div class="container">
+    <form th:action="@{/comments/create}" th:method="post" th:object="${comment}">
+        Description:
+        <input th:field="*{body}" />
+        <br />
+        <input type="submit" />
+    </form>
+</div>
+
+<div th:each="comment: ${comments}">
+    <h2 th:text="${comment.body}"></h2>
+</div>
+
 <footer th:replace="fragments/footer :: footer"></footer>
 </body>
 </html>

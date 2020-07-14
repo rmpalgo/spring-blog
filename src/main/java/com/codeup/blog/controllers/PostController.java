@@ -1,8 +1,10 @@
 package com.codeup.blog.controllers;
 
 import com.codeup.blog.daos.BlogsRepository;
+import com.codeup.blog.daos.CommentsRepository;
 import com.codeup.blog.daos.ImagesRepository;
 import com.codeup.blog.daos.UsersRepository;
+import com.codeup.blog.models.Comment;
 import com.codeup.blog.models.Post;
 import com.codeup.blog.models.PostImage;
 import com.codeup.blog.models.User;
@@ -25,12 +27,14 @@ public class PostController {
     private BlogsRepository postsDao;
     private UsersRepository usersDao;
     private ImagesRepository imagesDao;
+    private CommentsRepository commentsDao;
     private final EmailService emailService;
 
-    public PostController(BlogsRepository blogsRepository, UsersRepository usersRepository, ImagesRepository imagesRepository, EmailService emailService) {
+    public PostController(BlogsRepository blogsRepository, UsersRepository usersRepository, ImagesRepository imagesRepository, CommentsRepository commentsRepository, EmailService emailService) {
         this.postsDao = blogsRepository;
         this.usersDao = usersRepository;
         this.imagesDao = imagesRepository;
+        this.commentsDao = commentsRepository;
         this.emailService = emailService;
     }
 
@@ -45,7 +49,11 @@ public class PostController {
     @GetMapping("/posts/{id}")
     public String showOne(@PathVariable long id, Model model) {
         Post post = postsDao.getOne(id);
+        List<Comment> comments = commentsDao.findAll();
+        model.addAttribute("comment", new Comment());
         model.addAttribute("post", post);
+        model.addAttribute("No Comments", comments.size() == 0);
+        model.addAttribute("comments", comments);
         return "posts/show";
     }
 
