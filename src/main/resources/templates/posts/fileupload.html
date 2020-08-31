@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header('Blog | Create Page')">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<nav th:replace="fragments/navbar :: navbar" />
+<div class="container">
+    <form th:action="@{/fileupload}" th:method="POST" enctype="multipart/form-data">
+        <label for="file">Upload a file!</label>
+        <input id="file" name="file" type="file" />
+        <br />
+        <input type="submit" value="upload" />
+    </form>
+</div>
+</body>
+</html>
