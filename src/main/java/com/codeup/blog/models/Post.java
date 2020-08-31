@@ -1,5 +1,8 @@
 package com.codeup.blog.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -17,10 +20,12 @@ public class Post {
     @Column(nullable = false)
     private String body;
 
-    @OneToOne
+    @ManyToOne
+    @JsonManagedReference
     private User user;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
+    @JsonManagedReference
     private List<PostImage> images;
 
     @ManyToMany(cascade = CascadeType.ALL)
@@ -29,6 +34,7 @@ public class Post {
             joinColumns = {@JoinColumn(name = "post_id")},
             inverseJoinColumns = {@JoinColumn(name = "category_id")}
     )
+    @JsonManagedReference
     private List<PostCategory> categories;
 
     public long getId() {

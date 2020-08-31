@@ -1,4 +1,6 @@
 package com.codeup.blog.models;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -13,6 +15,7 @@ public class PostCategory {
     private String name;
 
     @ManyToMany(mappedBy = "categories")
+    @JsonBackReference
     private List<Post> posts;
 
     public PostCategory () {

@@ -1,5 +1,6 @@
 package com.codeup.blog.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
@@ -20,6 +21,7 @@ public class PostImage {
 
     @ManyToOne
     @JoinColumn(name = "post_id")
+    @JsonBackReference
     private Post post;
 
     public PostImage() {

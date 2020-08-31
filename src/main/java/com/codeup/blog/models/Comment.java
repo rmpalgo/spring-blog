@@ -1,6 +1,7 @@
 package com.codeup.blog.models;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -18,9 +19,11 @@ public class Comment {
     private String body;
 
     @ManyToOne
+//    @JsonBackReference
     private User user;
 
     @ManyToOne
+    @JsonBackReference
     private Post post;
 
     @CreationTimestamp

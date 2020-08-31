@@ -1,5 +1,9 @@
 package com.codeup.blog.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -12,15 +16,21 @@ public class User {
     long id;
 
     @Column(nullable = false, length = 50, unique = true)
-    String username;
+    private String username;
 
     @Column(nullable = false, length = 50, unique = true)
-    String email;
+    private String email;
 
     @Column(nullable = false)
-    String password;
+    @JsonIgnore
+    private String password;
+
+    @OneToMany(mappedBy = "user")
+    @JsonBackReference
+    private List<Post> posts;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonManagedReference
     private List<Comment> comments;
 
     //empty constructor for Spring framework

@@ -103,4 +103,10 @@ public class PostController {
         postsDao.deleteById(id);
         return "redirect:/posts";
     }
+
+    @GetMapping("/posts.json")
+    public @ResponseBody List<Post> getPostsAsJSON() {
+         return postsDao.findAll();
+    }
+
 }
